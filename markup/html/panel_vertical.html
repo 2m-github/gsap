@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+<!--#include file="./include/_head.html"-->
+<style>
+html,body {height:100%; }
+.wrap {height: 100%;}
+.container {width: 100%; height: 100%;}
+.panel {display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; color: #fff; font-size: 40px; overflow: hidden;}
+#p1 {background:url('../assets/img/parallax-1.jpg') no-repeat center center; background-size: cover;}
+#p2 {background:url('../assets/img/parallax-2.jpg') no-repeat center center; background-size: cover;}
+#p3 {background:url('../assets/img/parallax-3.jpg') no-repeat center center; background-size: cover;}
+#p4 {background:url('../assets/img/parallax-4.jpg') no-repeat center center; background-size: cover;}
+h1 {text-shadow: 1px 1px 3px black;}
+
+</style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="container">
+          <div id="p1" class="panel">
+            <h1 class="title">1</h1>
+          </div>
+          <div id="p2" class="panel">
+            <h1>2</h1>
+          </div>
+          <div id="p3" class="panel">
+            <h1>3</h1>
+          </div>
+          <div id="p4" class="panel">
+            <h1>4</h1>
+          </div>
+        </div>
+    </div>
+<script>
+
+gsap.registerPlugin(ScrollTrigger);
+
+let sections = gsap.utils.toArray(".container .panel");
+
+sections.forEach((ele, i) => {
+  
+  if(i){
+    
+    ele.style.backgroundPosition = `50% ${-innerHeight / 2}px`,
+    gsap.to(ele, {
+      backgroundPosition: `50% ${innerHeight / 2}px`,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ele,
+        scrub: true
+      }
+    })
+  }
+  else{
+    ele.style.backgroundPosition = `50% 0px`,
+    gsap.to(ele, {
+      backgroundPosition: `50% ${innerHeight / 2}px`,   
+      ease: "none",
+      scrollTrigger: {
+        trigger: ele,
+        start: "top top", 
+        end: "bottom top",
+        scrub: true
+      }
+    })
+  }
+});
+
+
+
+
+
+</script>
+</body>
+</html>

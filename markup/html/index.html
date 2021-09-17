@@ -6,19 +6,27 @@
 <body>
     <div class="wrap">
         <!--#include file="./include/_header.html"-->
-        <div class="section">
+        <div class="section1" style="height:100vh; background: #ff0880;">
+          <h1 class="tit" style="font-size: 50px; font-weight: bold; text-align: center;">is Title</h1>
+          <img id="imgChange" src="http://pub.da-rum.com:5018/kr/assets_m/img/content/keyins/frame/keyins_frame1.png" alt="">
+        </div>
+        <div class="section" style="position:relative; ">
+          <h1 class="tit" style="font-size: 50px; font-weight: bold; text-align: center;">is Title</h1>
+          <h2 class="tit2" style="font-size: 30px; font-weight: bold; text-align: center;">sub title</h2>
+          
           <div class="box1"></div>
           <div class="box2"></div>
           <div class="box3"></div>
           <div class="box4"></div>
           <div class="box5"></div>
+          <div class="bottom_text" style="position:absolute; bottom: 0; width: 100%; height: auto; font-size: 60px; text-align: center;">bottom</div>
         </div>
         <div class="gsap_area">
             <h1 class="gs_reveal">hello world!!!</h1>
             <div class="gs_reveal" style="width: 1000px; height: 300px; background-color: red;"></div>
             <div class="gs_reveal" style="width: 1000px; height: 300px; background-color: black;"></div>
             <div class="gs_reveal" style="width: 1000px; height: 300px; background-color: yellow;"></div>
-            <h2 class="gs_reveal" style="margin-top:1000px;">hello world!!!</h2>
+            <h2 class="gs_reveal tit" style="margin-top:1000px;">hello world!!!</h2>
             <p class="gs_reveal">objects with GSAP a breeze. Animate position, scale, color effects and more with all the power and control of GSAP and the rendering speed of Pixi.js.objects with GSAP a breeze. Animate position, scale, color effects and more with all the power and control of GSAP and the rendering speed of Pixi.js.objects with GSAP a breeze. Animate position, scale, color effects and more with all the power and control of GSAP and the rendering speed of Pixi.js.objects with GSAP a breeze. Animate position, scale, color effects and more with all the power and control of GSAP and the rendering speed of Pixi.js.objects with GSAP a breeze. Animate position, scale, color effects and more with all the power and control of GSAP and the rendering speed of Pixi.js.objects with GSAP a breeze. Animate position, scale, color effects and more with all the power and control of GSAP and the rendering speed of Pixi.js.</p>
             <div class="gs_reveal" style="width: 1000px; height: 300px; background-color: antiquewhite;"></div>
             <h2 class="gs_reveal" style="margin-top:1000px;">hello world!!!</h2>
@@ -32,6 +40,7 @@
 <script>
 function animateFrom(elem, direction) {
   direction = direction || 1;
+  
   var x = 0,
       y = direction * 100;
   
@@ -51,6 +60,13 @@ function hide(elem) {
   gsap.set(elem, {autoAlpha: 0});
 }
 
+function titleAni(elem) {
+  gsap.timeline().from(elem,{opacity:0, scale: 0,ease:'back'})
+}
+function resetTitleAni(elem) {
+  gsap.set(elem, {opacity:1, scale: 1,ease:'back'});
+}
+
 document.addEventListener("DOMContentLoaded", function() {
   gsap.registerPlugin(ScrollTrigger);
   
@@ -64,20 +80,115 @@ document.addEventListener("DOMContentLoaded", function() {
       onLeave: function() { hide(elem) } // assure that the element is hidden when scrolled into view
     });
   });
+
+  gsap.utils.toArray(".tit").forEach(function(elem) {
+    ScrollTrigger.create({
+      trigger: elem,
+      onEnter: function() { titleAni(elem) }, 
+      onEnterBack: function() { titleAni(elem) },
+      onLeave: function() { resetTitleAni(elem) }
+    });
+  });
+
 });
+
+var tl1 = gsap.timeline({
+  scrollTrigger:{
+    trigger: ".section1",
+    pin: true,
+    start: "top top",
+    scrub: true
+    
+  }
+});
+var obj = {curImg: 1};
+console.log("obj=",obj)
+tl1.to(obj,{
+  curImg: 28,
+  roundProps: "curImg",
+  repeat: 0,
+  immediateRender: true,
+  onUpdate:() => {
+    console.log("num=",obj.curImg)
+    $("#imgChange").attr("src",`http://pub.da-rum.com:5018/kr/assets_m/img/content/keyins/frame/keyins_frame${obj.curImg}.png`)
+  }
+})
 
 
 gsap.registerPlugin(ScrollTrigger);
+gsap.to(".box1", {
+  scrollTrigger: {
+    trigger: ".section",
+    //markers: true,
+    start: "top top",
+    scrub: true,
+    pin: true,
+    //pinSpacing: false
+  },
+  x: 300, 
+  
+  duration: 4,
+  rotate:360
+});
 gsap.to(".box2", {
   scrollTrigger: {
     trigger: ".section",
     markers: true,
-    start: "top center",
+    start: "top top",
     scrub: true,
-    pin: true,
+    //pin: true,
+    toggleActions: "restart pause resume none"
   },
-  x: 200, duration: 4,
+  x: 1000, 
+  duration: 3,
+  rotate:180
 });
+
+//WITH Timelines (cleaner, more versatile)
+// gsap.set(".section1", {scale:1});
+// var tit = gsap.timeline();
+// tit.from(".tit",{opacity:0, scale: 0,ease:'back'});
+
+
+
+
+var tl = gsap.timeline({
+  scrollTrigger:{
+    trigger: ".section",
+    pin: true,
+    start: "top top",
+    //yoyo:true,
+    markers: true,
+    scrub: true,
+  }
+});
+tl.to(".box3", {x: 100, duration: 1});
+tl.to(".box4", {y: 50, duration: 1});
+tl.to(".box5", { duration: 1,rotation: "+=360"});
+
+tl.to(".tit2", 3, {y:500,opacity: 0.2,scale: 2, duration: 2, rotation : - 270},  "-=3");
+tl.to(".bottom_text", {top:"50%",y:"-50%",opacity: 0.2,scale: 2, duration: 2}, "-=3");
+
+
+
+// then we can control the whole thing easily...
+//tl.play();
+// tl.resume();
+// tl.seek(1.5);
+// tl.reverse();
+
+// ScrollTrigger.create({
+//   trigger: ".section",
+//   start: "top top",
+//   endTrigger: ".tit",
+//   end: "bottom 500%+=100px",
+//   onToggle: self => console.log("toggled, isActive:", self.isActive),
+//   onUpdate: self => {
+//     console.log("progress:", self.progress.toFixed(3), "direction:", self.direction, "velocity", self.getVelocity());
+//   }
+// });
+
+
 </script>
 
 </body>
