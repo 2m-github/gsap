@@ -9,7 +9,7 @@ html,body {height:100%; }
 .panel {position: absolute; left: 0; bottom: 0; width: 100%; height: 100%;}
 .panel img { width: 100%; height: 100%; position: absolute; left: 0; bottom: 0;}
 .contents {position: absolute; left: 0; top: 100%; z-index: 0; width: 100%; height: 2000px; background-color: black;}
-.blur { position: absolute; left: -10%; top: -180px; z-index: 99;
+.blur { position: absolute; left: -10%; bottom: -180px; z-index: 99;
 width: 120%; height: 250px; background-color: #000; filter: blur(40px);}
 
 
@@ -36,10 +36,10 @@ width: 120%; height: 250px; background-color: #000; filter: blur(40px);}
           <div id="p6" class="panel">
             <img src="../assets/img/mount-1.png" alt="">
           </div>
-          
+          <div class="blur"></div>
         </div>
         <div class="contents">
-          <div class="blur"></div>
+          <!-- <div class="blur"></div> -->
 
         </div>
     </div>
@@ -60,11 +60,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   })
   tl.to("#p6",{
-    y:-700,
+    y:-800,
     duration:6
   })
   .to("#p5",{
-    y:-500,
+    y:-600,
     duration:6
   },"-=6")
   .to("#p4",{
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
     duration:6
   },"-=6")
   .to(".contents, .blur", {
-    top:"0%",
+    top:"0",
     duration:6
   },"-=6")
 

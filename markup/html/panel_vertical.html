@@ -42,9 +42,9 @@ sections.forEach((ele, i) => {
   
   if(i){
     
-    ele.style.backgroundPosition = `50% ${-innerHeight / 2}px`,
+    ele.style.backgroundPosition = `50% ${-innerHeight / 4}px`,
     gsap.to(ele, {
-      backgroundPosition: `50% ${innerHeight / 2}px`,
+      backgroundPosition: `50% ${innerHeight / 4}px`,
       ease: "none",
       scrollTrigger: {
         trigger: ele,
@@ -55,7 +55,7 @@ sections.forEach((ele, i) => {
   else{
     ele.style.backgroundPosition = `50% 0px`,
     gsap.to(ele, {
-      backgroundPosition: `50% ${innerHeight / 2}px`,   
+      backgroundPosition: `50% ${innerHeight / 4}px`,   
       ease: "none",
       scrollTrigger: {
         trigger: ele,
